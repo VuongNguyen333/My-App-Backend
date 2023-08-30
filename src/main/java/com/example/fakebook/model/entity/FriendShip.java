@@ -21,9 +21,9 @@ public class FriendShip {
    @ManyToOne
    private UserInfo toUserInfo;
 
-   private Long status;
+   private int status;
 
-   public FriendShip(UserInfo fromUserInfo, UserInfo toUserInfo, Long status) {
+   public FriendShip(UserInfo fromUserInfo, UserInfo toUserInfo, int status) {
       this.fromUserInfo = fromUserInfo;
       this.toUserInfo = toUserInfo;
       this.status = status;

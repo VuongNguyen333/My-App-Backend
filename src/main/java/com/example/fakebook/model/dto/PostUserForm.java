@@ -9,6 +9,13 @@ import org.springframework.web.multipart.MultipartFile;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PostUserForm {
+
+   private Long userInfoId;
    private String content;
    private MultipartFile[] image;
+
+   public PostUserForm(Long userInfoId, String content) {
+      this.userInfoId = userInfoId;
+      this.content = content;
+   }
 }

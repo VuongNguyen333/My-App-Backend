@@ -5,27 +5,26 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
-@Entity
 @Data
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class PostUser {
+public class LikePost {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long id;
 
-   public String content;
+   private boolean status;
 
-   private Date dateCreated;
+   @ManyToOne
+   private PostUser postUser;
 
    @ManyToOne
    private UserInfo userInfo;
 
-   public PostUser(String content, Date dateCreated, UserInfo userInfo) {
-      this.content = content;
-      this.dateCreated = dateCreated;
+   public LikePost(boolean status, PostUser postUser, UserInfo userInfo) {
+      this.status = status;
+      this.postUser = postUser;
       this.userInfo = userInfo;
    }
 }

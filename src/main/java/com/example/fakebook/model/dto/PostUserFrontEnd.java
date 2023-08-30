@@ -20,7 +20,8 @@ public class PostUserFrontEnd {
 
    private Date dateCreated;
 
-   private  MultipartFile[] image;
+   private MultipartFile[] image;
+
    private UserInfo userInfo;
 
    private Integer totalLike;

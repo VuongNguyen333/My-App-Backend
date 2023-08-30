@@ -1,7 +1,6 @@
 package com.example.fakebook.model.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -35,6 +34,17 @@ public class UserInfo {
 
    private String about;
 
+   public UserInfo(Long id, String email, String name, String age, String sex, String address, String about) {
+      this.id = id;
+      this.email = email;
+      this.name = name;
+      this.age = age;
+      this.sex = sex;
+      this.address = address;
+      this.about = about;
+   }
+
+
    public UserInfo(String email, String name, String age, String sex, String address, String avatarUrl, String backgroundUrl, User user, String about) {
       this.email = email;
       this.name = name;
@@ -45,5 +55,17 @@ public class UserInfo {
       this.backgroundUrl = backgroundUrl;
       this.user = user;
       this.about = about;
+   }
+
+   public UserInfo(String name, User user) {
+      this.name = name;
+      this.user = user;
+   }
+
+   public UserInfo(String name, String avatarUrl, String backgroundUrl, User user) {
+      this.name = name;
+      this.avatarUrl = avatarUrl;
+      this.backgroundUrl = backgroundUrl;
+      this.user = user;
    }
 }

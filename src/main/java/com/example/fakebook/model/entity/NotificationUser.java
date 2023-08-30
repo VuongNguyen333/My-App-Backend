@@ -27,10 +27,20 @@ public class NotificationUser {
    @ManyToOne
    private UserInfo toUserInfo;
 
+   private Long postId;
+
    public NotificationUser(Date dateCreated, String content, UserInfo fromUserInfo, UserInfo toUserInfo) {
       this.dateCreated = dateCreated;
       this.content = content;
       this.fromUserInfo = fromUserInfo;
       this.toUserInfo = toUserInfo;
+   }
+
+   public NotificationUser(Date dateCreated, String content, UserInfo fromUserInfo, UserInfo toUserInfo, Long postId) {
+      this.dateCreated = dateCreated;
+      this.content = content;
+      this.fromUserInfo = fromUserInfo;
+      this.toUserInfo = toUserInfo;
+      this.postId = postId;
    }
 }

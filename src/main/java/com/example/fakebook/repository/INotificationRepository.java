@@ -10,6 +10,8 @@ import java.util.List;
 @Repository
 public interface INotificationRepository extends JpaRepository<NotificationUser, Long> {
 
-   @Query(value = "select * from notification_user where to_user_id = ?1 order by date_created", nativeQuery = true)
+   @Query(value = "select * from notification_user where to_user_info_id = ?1 order by date_created desc ", nativeQuery = true)
    List<NotificationUser> showAll(Long to_user_id);
+
+   void deleteAllByToUserInfoId(Long to_userInfo_id);
 }

@@ -1,13 +1,12 @@
 package com.example.fakebook.controller;
 
-import com.example.fakebook.request.ReqId;
-import com.example.fakebook.service.UserInfoService;
-import com.example.fakebook.utils.Contains;
 import com.example.fakebook.model.entity.User;
+import com.example.fakebook.request.ReqId;
 import com.example.fakebook.request.ReqRegister;
 import com.example.fakebook.request.ReqUpdatePass;
 import com.example.fakebook.respone.Resp;
 import com.example.fakebook.service.UserService;
+import com.example.fakebook.utils.Contains;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,17 +14,16 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("fakebook")
+@RequestMapping(path = "fakebook")
 public class UserController {
    @Autowired
    private UserService userService;
 
    @PostMapping("/register")
-   public ResponseEntity<Resp> register(@RequestBody  ReqRegister reqRegister) {
+   public ResponseEntity<Resp> register(@RequestBody ReqRegister reqRegister) {
       Resp resp = new Resp();
       try {
-         userService.addNewUser(reqRegister);
-         resp.setData(new User(reqRegister.getUsername() , reqRegister.getPassword()));
+         resp.setData(userService.addNewUser(reqRegister));
          resp.setStatusCode(Contains.RESP_SUCC);
          resp.setMsg("Thanh cong!");
       } catch (Exception e) {
@@ -39,14 +37,14 @@ public class UserController {
    public ResponseEntity<Resp> login(@RequestBody User user) {
       Resp resp = new Resp();
       try {
-         resp.setAll(userService.checkLogin(user), Contains.RESP_SUCC, "Dang nhap thanh cong!");
+         resp.setAll(userService.checkLogin(user).get(), Contains.RESP_SUCC, "Dang nhap thanh cong!");
       } catch (Exception e) {
-         resp.setAll(null, Contains.RESP_SUCC, e.getMessage());
+         resp.setAll(null, Contains.RESP_FAIL, e.getMessage());
       }
       return ResponseEntity.ok(resp);
    }
 
-   @PutMapping("update")
+   @PostMapping("update")
    public ResponseEntity<Resp> update(@RequestBody ReqUpdatePass reqUpdatePass) {
       Resp resp = new Resp();
       try {
@@ -60,7 +58,7 @@ public class UserController {
       return ResponseEntity.ok(resp);
    }
 
-   @DeleteMapping("delete")
+   @PostMapping("delete")
    public ResponseEntity<Resp> delete(@RequestBody ReqId reqId) {
       Resp resp = new Resp();
       try {

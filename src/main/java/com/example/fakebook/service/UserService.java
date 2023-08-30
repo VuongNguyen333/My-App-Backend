@@ -18,28 +18,38 @@ public class UserService {
    @Autowired
    private IUserRepository userRepository;
 
+   @Autowired
+   private IUserInfoRepository userInfoRepository;
+
    @Transactional
-   public void addNewUser(ReqRegister reqRegister) throws IllegalAccessException {
-      Optional<User> userOptional = userRepository
-             .findByUsername(reqRegister.getUsername());
+   public User addNewUser(ReqRegister reqRegister) throws IllegalAccessException {
+      Optional<User> userOptional = userRepository.findByUsername(reqRegister.getUsername());
       if (userOptional.isPresent()) {
          throw new IllegalAccessException("Đã tồn tại tài khoản");
       } else if (!Objects.equals(reqRegister.getPassword(), reqRegister.getConfirmPassword())) {
          throw new IllegalAccessException("Không trùng khớp");
+      } else {
+         User user = new User(reqRegister.getUsername(), reqRegister.getPassword());
+         userInfoRepository.save(new UserInfo(
+                reqRegister.getUsername(),
+                "https://media.istockphoto.com/vectors/default-profile-picture-avatar-photo-placeholder-vector-illustration-vector-id1223671392?k=6&m=1223671392&s=612x612&w=0&h=NGxdexflb9EyQchqjQP0m6wYucJBYLfu46KCLNMHZYM=",
+                "https://th.bing.com/th/id/R.ca4d1d61d748cf96ca974337c158376d?rik=e9JslLpSTdOI4w&pid=ImgRaw&r=0",
+                user
+         ));
+         return userRepository.save(user);
       }
-      userRepository.save(userOptional.get());
    }
 
    @Transactional
-   public Optional<User> checkLogin(User user) throws Exception {
+   public Optional<UserInfo> checkLogin(User user) throws Exception {
       Optional<User> userOptional = userRepository.findByUsernameAndPassword(user.getUsername(), user.getPassword());
-      if (userOptional.isPresent()) return userOptional;
+      if (userOptional.isPresent()) return userInfoRepository.findByUserId(userOptional.get().getId());
       else throw new Exception("Thông tin tài khoản chưa chính xác, hãy chắc chắn rằng bạn đã đăng ký!");
    }
 
    @Transactional
    public User updatePasswordUser(ReqUpdatePass reqUpdatePass) throws Exception {
-      if (Objects.equals(reqUpdatePass.getNewPass(), reqUpdatePass.getOldPass())) {
+      if (reqUpdatePass.getOldPass() == reqUpdatePass.getNewPass()) {
          throw new Exception("Vui long chon mat khau khac");
       } else {
          Optional<User> userOptional = userRepository.findById(reqUpdatePass.getId());

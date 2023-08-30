@@ -11,7 +11,8 @@ import java.util.List;
 public interface IPostUserRepository extends JpaRepository<PostUser, Long> {
 
    @Query(value = "select * from post_user where user_info_id=?1 order by id desc ", nativeQuery = true)
-   List<PostUser> showAllByUserInfo(Long userInfoId);
+   List<PostUser> findAllByUserInfoId(Long userInfoId);
 
-
+   @Query(value = "select * from post_user order by date_created desc ", nativeQuery = true)
+   List<PostUser> findAllPost();
 }

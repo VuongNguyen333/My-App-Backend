@@ -18,6 +18,10 @@ public class Image {
 
    private String image;
 
-   @ManyToOne
-   private PostUser postUser;
+   private Long postUserId;
+
+   public Image(String image, Long postUserId) {
+      this.image = image;
+      this.postUserId = postUserId;
+   }
 }
