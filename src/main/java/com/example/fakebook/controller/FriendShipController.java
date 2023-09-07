@@ -85,6 +85,7 @@ public class FriendShipController {
    public ResponseEntity<Resp> addFriend(@RequestBody ReqAddFriend reqAddFriend) {
       Resp resp = new Resp();
       try {
+         friendShipService.addFriendReq(reqAddFriend);
          resp.setAll(null, Contains.RESP_SUCC, "OK!");
       } catch (Exception e) {
          resp.setAll(null, Contains.RESP_FAIL, e.getMessage());
