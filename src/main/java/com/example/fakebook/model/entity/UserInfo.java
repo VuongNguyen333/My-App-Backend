@@ -44,7 +44,6 @@ public class UserInfo {
       this.about = about;
    }
 
-
    public UserInfo(String email, String name, String age, String sex, String address, String avatarUrl, String backgroundUrl, User user, String about) {
       this.email = email;
       this.name = name;
